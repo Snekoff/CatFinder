@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 import { submitForm } from './form.actions';
 
-export const initialState = {disabled: false};
+export const initialState = {};
 
 export const formReducer = createReducer(
   initialState,
-  on(submitForm, (state) =>  state)
+  on(submitForm, (state,  {form}) => form)
 );

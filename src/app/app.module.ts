@@ -9,10 +9,15 @@ import { ControlFormComponent } from './control-form/control-form.component';
 import { StoreModule } from '@ngrx/store';
 import { formReducer } from './state/form.reducer';
 
-
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { breedReducer } from './state/breed.reducer';
 import { BreedListComponent } from './breed-list/breed-list.component';
+
+import {MatSelectModule} from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -24,8 +29,13 @@ import { BreedListComponent } from './breed-list/breed-list.component';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ form: formReducer, breed: breedReducer }),
-    HttpClientModule
+    StoreModule.forRoot({form: formReducer, breeds: breedReducer}),
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -42,7 +42,7 @@ export class ControlFormComponent implements OnInit {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    this.store.dispatch(submitForm());
+    //this.store.dispatch(submitForm());
     console.warn(this.filters.value);
   }
 
@@ -50,9 +50,3 @@ export class ControlFormComponent implements OnInit {
 
 
 
-//https://rxjs.dev/guide/overview
-//https://ngrx.io/guide/store
-//https://angular.io/guide/reactive-forms#validating-form-input
-
-
-//https://ngrx.io/guide/store/walkthrough

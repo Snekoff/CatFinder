@@ -1,19 +1,21 @@
-
 <form [formGroup]="filters" (ngSubmit)="onSubmit()">
 
-  <div formArrayName="breeds">
-    <h2>Breeds</h2>
-    <ng-container *ngIf="breeds$ | async as breeds" >
-      <app-breed-list class="book-list" [breeds]="breeds" ></app-breed-list>
+  <div formArrayName="breedsControl">
+    <h2>Filters</h2>
+    <ng-container *ngIf="breeds$ | async as breeds">
+      <app-breed-list class="book-list" [breeds]="breeds"></app-breed-list>
     </ng-container>
   </div>
 
-  <label for="amountOfPictures">Amount to show: </label>
-  <input id="amountOfPictures" type="text" formControlName="amountOfPictures" required >
+  <mat-form-field class="example-full-width" appearance="fill" formControlName="amountOfPictures">
+    <mat-label>Amount to show</mat-label>
+    <input matInput placeholder="Ex. Pizza" value=10 required>
+  </mat-form-field>
 
-  <p>Complete the form to enable button.</p>
-  <button type="submit" [disabled]="!filters.valid">Find some kitties</button>
+  <!--<p>Complete the form to enable button.</p>-->
+  <div>
+    <button type="submit" mat-raised-button color="primary" [disabled]="!filters.valid">Find some kitties</button>
+  </div>
+
 </form>
-
-
 

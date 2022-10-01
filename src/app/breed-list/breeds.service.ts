@@ -19,6 +19,6 @@ export class BreedsService {
         'https://api.thecatapi.com/v1/breeds?limit=10',
         options
       )
-      .pipe(map((breeds) => breeds || []));;
+      .pipe(map((breeds) => breeds || []));
   }
 }
