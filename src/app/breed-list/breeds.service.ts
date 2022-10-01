@@ -14,13 +14,11 @@ export class BreedsService {
         "x-api-key": "live_9Mjmycqpsu2PJrkc1tBMZoqKWye5Ox1EhdQj6HBiQGAIqd9GchbYu8rlzI7BbqUT"
       }
     }
-    let tmp = this.http
+    return this.http
       .get<Array<Breed>>(
         'https://api.thecatapi.com/v1/breeds?limit=10',
         options
       )
-      .pipe(map((breeds) => breeds || []));
-    console.log(tmp);
-    return tmp;
+      .pipe(map((breeds) => breeds || []));;
   }
 }

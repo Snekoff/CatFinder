@@ -28,8 +28,7 @@ export class ControlFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addBreed("breed1");
-    this.addBreed("breed2");
+
   }
 
   get breeds() {

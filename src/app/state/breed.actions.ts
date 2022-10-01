@@ -4,5 +4,5 @@ import {breedReducer} from "./breed.reducer";
 
 export const retrievedBreedList = createAction(
   '[Breed List/API] Retrieve Breeds Success',
-  props<ReadonlyArray<Breed>>()
+  props<{breeds: Breed[]}>()
 );

@@ -1,5 +1,19 @@
-<app-cat-images></app-cat-images>
-<app-control-form></app-control-form>
 
-<h2>Breeds</h2>
-<app-breed-list class="book-list" [breeds]="breeds$ | async" ></app-breed-list>
+<form [formGroup]="filters" (ngSubmit)="onSubmit()">
+
+  <div formArrayName="breeds">
+    <h2>Breeds</h2>
+    <ng-container *ngIf="breeds$ | async as breeds" >
+      <app-breed-list class="book-list" [breeds]="breeds" ></app-breed-list>
+    </ng-container>
+  </div>
+
+  <label for="amountOfPictures">Amount to show: </label>
+  <input id="amountOfPictures" type="text" formControlName="amountOfPictures" required >
+
+  <p>Complete the form to enable button.</p>
+  <button type="submit" [disabled]="!filters.valid">Find some kitties</button>
+</form>
+
+
+

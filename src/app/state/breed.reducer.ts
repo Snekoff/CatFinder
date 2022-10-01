@@ -7,5 +7,5 @@ export const initialState: ReadonlyArray<Breed> = [];
 
 export const breedReducer = createReducer(
   initialState,
-  on(retrievedBreedList, (state,  breeds) => breeds)
+  on(retrievedBreedList, (state,  {breeds}) => breeds)
 );
