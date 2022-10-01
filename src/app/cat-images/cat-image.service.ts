@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {selectBreeds, selectForm} from "../state/breeds.selectors";
+import {selectBreeds} from "../state/breeds.selectors";
 import {Store} from '@ngrx/store';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {Breed} from "../breed-list/breed.model";
 import {map} from "rxjs/operators";
+import {selectForm} from "../state/form.selector";
 
 
 @Injectable({
@@ -24,6 +25,7 @@ export class CatImageService {
     this.breeds$.subscribe((breeds)=>{breeds.map((breed)=>this.breedNamesMap.set(breed.name, breed.id))});
 
     this.form$.subscribe((form) => {
+      console.log("form", form);
       form.breedsControl.value.forEach((item:string, index:number) => {
         if(index > 0) this.breedListString = this.breedListString + "," + this.breedNamesMap.get(item)
         else this.breedListString = this.breedListString + this.breedNamesMap.get(item)

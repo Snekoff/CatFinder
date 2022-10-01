@@ -18,6 +18,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from "@angular/material/divider";
+import {imagesReducer} from "./state/images.reducer";
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -29,13 +31,14 @@ import {MatDividerModule} from "@angular/material/divider";
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({form: formReducer, breeds: breedReducer}),
+    StoreModule.forRoot({form: formReducer, breeds: breedReducer, imageUrls: imagesReducer}),
     HttpClientModule,
     BrowserAnimationsModule,
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]

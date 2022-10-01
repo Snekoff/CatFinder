@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { selectBreeds, selectForm } from './state/breeds.selectors';
+import { selectBreeds } from './state/breeds.selectors';
 import { retrievedBreedList } from './state/breed.actions';
 import { BreedsService } from './breed-list/breeds.service';
 import {Observable} from "rxjs";
@@ -9,6 +9,7 @@ import {FormArray, FormBuilder, Validators} from "@angular/forms";
 import {submitForm} from "./state/form.actions";
 import {map} from "rxjs/operators";
 import { Breed } from './breed-list/breed.model';
+import {selectForm} from "./state/form.selector";
 
 @Component({
   selector: 'app-root',
@@ -35,7 +36,10 @@ export class AppComponent {
       .getBreeds()
       .subscribe((breeds) => this.store.dispatch(retrievedBreedList( {breeds} )))
 
-    this.form.subscribe((form)=> this.store.dispatch(submitForm({form})));
+    this.form$.subscribe((form)=> {
+      console.log("form1", form);
+      this.store.dispatch(submitForm({form}))
+    });
   }
 
 
@@ -50,6 +54,10 @@ export class AppComponent {
 
   get breeds() {
     return this.filters.get("breedsControl") as FormArray;
+  }
+
+  get limitOfPictures() {
+    return this.filters.get("amountOfPictures");
   }
 
   onSubmit() {
@@ -70,3 +78,6 @@ export class AppComponent {
 
 
 //https://ngrx.io/guide/store/walkthrough
+
+
+//TODO: https://material.angular.io/components/sidenav/overview

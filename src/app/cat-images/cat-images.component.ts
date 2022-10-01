@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Store} from "@ngrx/store";
+import {retrievedBreedList} from "../state/breed.actions";
+import {CatImageService} from "./cat-image.service";
+import {selectImages} from "../state/images.selector";
+import {retrievedUrlList} from "../state/images.actions";
 
 @Component({
   selector: 'app-cat-images',
@@ -7,9 +12,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CatImagesComponent implements OnInit {
 
-  constructor() { }
+  imageUrls$ = this.store.select(selectImages);
+
+  constructor(
+    private imageService: CatImageService,
+    private store: Store
+  ) {
+  }
 
   ngOnInit(): void {
+    this.imageService
+      .getImagesUrl()
+      .subscribe((imageUrls) => this.store.dispatch(retrievedUrlList( {imageUrls} )));
   }
 
 }
