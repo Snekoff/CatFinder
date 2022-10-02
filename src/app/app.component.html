@@ -7,10 +7,10 @@
   <mat-sidenav mode="side" opened>
     <form [formGroup]="filters" (ngSubmit)="onSubmit()">
 
-      <div formArrayName="breedsControl">
+      <div >
         <h2>Filters</h2>
-        <ng-container *ngIf="breeds$ | async as breeds">
-          <app-breed-list class="book-list" [breeds]="breeds"></app-breed-list>
+        <ng-container *ngIf="breeds$ | async as breeds" >
+          <app-breed-list class="book-list" [breeds]="breeds" (choose)="onChangeMatFetchBreeds($event)"  formArrayName="breedsControl"  ></app-breed-list>
         </ng-container>
       </div>
 

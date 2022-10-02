@@ -38,7 +38,7 @@ export interface Breed {
       "metric"?: string | undefined
     } | undefined,
   "id": string,
-  "name"?: string,
+  "name": string,
   "cfa_url"?: string | undefined,
   "vetstreet_url"?: string | undefined,
   "vcahospitals_url"?: string | undefined,

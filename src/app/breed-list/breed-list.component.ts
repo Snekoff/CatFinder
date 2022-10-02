@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit, AfterViewInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  AfterViewInit,
+  SimpleChange, SimpleChanges
+} from '@angular/core';
 import {Breed} from './breed.model';
 import {FormControl} from '@angular/forms';
 import {Observable, pipe} from 'rxjs';
@@ -12,21 +21,26 @@ import {Observable, pipe} from 'rxjs';
 export class BreedListComponent  {
 
   @Input() breeds: Array<Breed> = [];
-  @Output() choose = new EventEmitter<string>();
+  @Output() choose = new EventEmitter<Array<string>>();
   breedsC = new FormControl(['All breeds']);
-  breedsStringArr: Array<string | undefined> = [];
+  breedsStringArr: Array<string> = [];
 
   constructor() {
-    setTimeout(
-      () => this.reformatBreeds(), 500
-    )
+  }
 
+  onChangeMat(value: Array<string> | null) {
+    if(value) this.choose.emit(value);
   }
 
   reformatBreeds() {
+    this.breedsStringArr = [];
     this.breedsStringArr.push("All breeds");
     this.breeds.map((breed)=>this.breedsStringArr.push(breed.name));
-    console.log(this.breedsStringArr);
+    console.log("this.breedsStringArr",this.breedsStringArr);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.reformatBreeds()
   }
 
 }

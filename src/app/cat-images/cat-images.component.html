@@ -1,3 +1,6 @@
-<ng-container *ngIf="imageUrls$ | async as urls">
-  <img *ngFor="let url of urls" [src]=url alt="some kitten img should be here">
+<ng-container *ngIf="imageUrls as urls">
+  <div *ngFor="let url of urls">
+    <img  [src]=url alt="some kitten img should be here">
+  </div>
+
 </ng-container>

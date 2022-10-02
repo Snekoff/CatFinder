@@ -10,7 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { formReducer } from './state/form.reducer';
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { breedReducer } from './state/breed.reducer';
+import {breedReducer} from './state/breed.reducer';
 import { BreedListComponent } from './breed-list/breed-list.component';
 
 import {MatSelectModule} from '@angular/material/select';

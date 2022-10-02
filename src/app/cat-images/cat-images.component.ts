@@ -12,7 +12,8 @@ import {retrievedUrlList} from "../state/images.actions";
 })
 export class CatImagesComponent implements OnInit {
 
-  imageUrls$ = this.store.select(selectImages);
+  imageUrlObjs$ = this.store.select(selectImages);
+  imageUrls: Array<string> = [];
 
   constructor(
     private imageService: CatImageService,
@@ -21,9 +22,12 @@ export class CatImagesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.imageService
-      .getImagesUrl()
-      .subscribe((imageUrls) => this.store.dispatch(retrievedUrlList( {imageUrls} )));
+    this.imageUrlObjs$.subscribe((objects)=>this.reformatArrayOfObjectsToArrayOsUrls(objects))
+  }
+
+  reformatArrayOfObjectsToArrayOsUrls(imageObjects: Array<any>) {
+    imageObjects.map((imageObj)=>this.imageUrls.push(imageObj.url));
+    console.log("this.imageUrls",this.imageUrls);
   }
 
 }
