@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
-import {selectBreeds} from "../state/breeds.selectors";
+import {selectBreeds} from "../state/selectors/breeds.selectors";
 import {Store} from '@ngrx/store';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
-import {Breed} from "../breed-list/breed.model";
 import {map} from "rxjs/operators";
-import {selectForm} from "../state/form.selector";
+import {selectForm} from "../state/selectors/form.selector";
 
 
 @Injectable({
@@ -23,18 +22,29 @@ export class CatImageService {
               private http: HttpClient
   ) {
 
-    this.breeds$.subscribe((breeds)=>{breeds.map((breed)=>this.breedNamesMap.set(breed.name, breed.id))});
+    this.breeds$.subscribe((breeds) => {
+      breeds.map((breed) => this.breedNamesMap.set(breed.name, breed.id))
+    });
 
     this.form$.subscribe((form) => {
-      console.log("form", form);
-      this.breedListString = ''
-      if(form.hasOwnProperty("value")) {
-        if(form.value.hasOwnProperty("amountOfPictures")) this.limit = form.value.amountOfPictures || 10;
-        if(form.value.hasOwnProperty("breedsControl")) form.value.breedsControl.forEach((item:string, index:number) => {
-          if(index > 0) this.breedListString = this.breedListString.concat(",", this.breedNamesMap.get(item));
-          else if(item === "All Breeds") this.breedListString = "All Breeds";
-          else this.breedListString = "".concat(this.breedNamesMap.get(item))
-        })
+      this.breedListString = '';
+
+      if (form.hasOwnProperty("value")) {
+        if (form.value.hasOwnProperty("amountOfPictures")) this.limit = form.value.amountOfPictures || 10;
+
+        if (form.value.hasOwnProperty("breedsControl")) {
+          let array = form.value.breedsControl;
+          if(Array.isArray(array[0])) array = array[0];
+          console.log(array);
+          console.log(this.breedNamesMap);
+          array.forEach((item: string, index: number) => {
+            if(item === "All Breeds") {
+              this.breedListString = "All Breeds";
+            } else if(this.breedListString === "") {
+              this.breedListString = "breed_id=".concat(this.breedNamesMap.get(item))
+            }
+          })
+        }
       }
     })
   }
@@ -43,15 +53,10 @@ export class CatImageService {
 
     let url = "https://api.thecatapi.com/v1/images/search?limit=" + this.limit;
     if (this.breedListString.indexOf("All Breeds") === -1 && this.breedListString.indexOf("undefined") === -1 && this.breedListString.length > 0) {
-      url = url + "&" + this.breedListString;
+      url = url.concat("&", this.breedListString);
     }
-    console.log("url", url);
-    console.log("this.breedListString", this.breedListString);
-    console.log("this.limit", this.limit);
-    console.log("getImagesUrl this.form$", this.form$);
-    console.log("getImagesUrl this.breeds$", this.breeds$);
-
-
+    console.log("url",url);
+    console.log("this.breedListString",this.breedListString);
     let options = {
       headers: {
         "x-api-key": "live_9Mjmycqpsu2PJrkc1tBMZoqKWye5Ox1EhdQj6HBiQGAIqd9GchbYu8rlzI7BbqUT"

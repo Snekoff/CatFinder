@@ -1,13 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import {retrievedUrlList} from "./images.actions";
+import {retrievedUrlList} from "../actions/images.actions";
 
-export interface UrlsState {
-  imageUrls: string[]
-}
-
-const initialUrlsState: UrlsState = {
-  imageUrls: []
-}
 export const initialState: string[] = []
 
 export const imagesReducer = createReducer(

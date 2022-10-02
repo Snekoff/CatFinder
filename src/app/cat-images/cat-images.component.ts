@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {retrievedBreedList} from "../state/breed.actions";
 import {CatImageService} from "./cat-image.service";
-import {selectImages} from "../state/images.selector";
-import {retrievedUrlList} from "../state/images.actions";
+import {selectImages} from "../state/selectors/images.selector";
 
 @Component({
   selector: 'app-cat-images',
@@ -22,12 +20,11 @@ export class CatImagesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.imageUrlObjs$.subscribe((objects)=>this.reformatArrayOfObjectsToArrayOsUrls(objects))
+    this.imageUrlObjs$.subscribe((objects) => this.reformatArrayOfObjectsToArrayOsUrls(objects))
   }
 
   reformatArrayOfObjectsToArrayOsUrls(imageObjects: Array<any>) {
-    imageObjects.map((imageObj)=>this.imageUrls.push(imageObj.url));
-    console.log("this.imageUrls",this.imageUrls);
+    imageObjects.map((imageObj) => this.imageUrls.push(imageObj.url));
   }
 
 }

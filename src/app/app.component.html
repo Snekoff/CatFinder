@@ -1,27 +1,22 @@
-
-
-
-
-
 <mat-sidenav-container class="example-container">
   <mat-sidenav mode="side" opened>
     <form [formGroup]="filters" (ngSubmit)="onSubmit()">
 
-      <div >
+      <div>
         <h2>Filters</h2>
-        <ng-container *ngIf="breeds$ | async as breeds" >
-          <app-breed-list class="book-list" [breeds]="breeds" (choose)="onChangeMatFetchBreeds($event)"  formArrayName="breedsControl"  ></app-breed-list>
+        <ng-container *ngIf="breeds$ | async as breeds">
+          <app-breed-list class="book-list" [breeds]="breeds" (choose)="onChangeMatFetchBreeds($event)"
+                          formArrayName="breedsControl"></app-breed-list>
         </ng-container>
       </div>
 
-      <mat-form-field class="example-full-width" appearance="fill" >
+      <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Amount to show</mat-label>
         <input matInput placeholder="amountOfPictures" formControlName="amountOfPictures" value=10 required>
       </mat-form-field>
 
-      <!--<p>Complete the form to enable button.</p>-->
       <div>
-        <button type="submit" mat-raised-button color="primary" [disabled]="!filters.valid">Find some kitties</button>
+        <button mat-raised-button color="primary" [disabled]="!filters.valid">Find some kitties</button>
       </div>
 
     </form>

@@ -3,14 +3,10 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output,
-  OnInit,
-  AfterViewInit,
-  SimpleChange, SimpleChanges
+  Output
 } from '@angular/core';
 import {Breed} from './breed.model';
 import {FormControl} from '@angular/forms';
-import {Observable, pipe} from 'rxjs';
 
 @Component({
   selector: 'app-breed-list',
@@ -18,7 +14,7 @@ import {Observable, pipe} from 'rxjs';
   styleUrls: ['./breed-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BreedListComponent  {
+export class BreedListComponent {
 
   @Input() breeds: Array<Breed> = [];
   @Output() choose = new EventEmitter<Array<string>>();
@@ -29,17 +25,16 @@ export class BreedListComponent  {
   }
 
   onChangeMat(value: Array<string> | null) {
-    if(value) this.choose.emit(value);
+    if (value) this.choose.emit(value);
   }
 
   reformatBreeds() {
     this.breedsStringArr = [];
     this.breedsStringArr.push("All breeds");
-    this.breeds.map((breed)=>this.breedsStringArr.push(breed.name));
-    console.log("this.breedsStringArr",this.breedsStringArr);
+    this.breeds.map((breed) => this.breedsStringArr.push(breed.name));
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     this.reformatBreeds()
   }
 

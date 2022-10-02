@@ -1,35 +1,3 @@
-/*export interface Breed {
-  id ?: string | undefined
-  name ?: string | undefined
-  temperament ?: string | undefined
-  life_span ?: string | undefined
-  alt_names ?: string | undefined
-  wikipedia_url ?: string | undefined
-  origin ?: string | undefined
-  weight_imperial ?: string | undefined
-  experimental ?: number | undefined
-  hairless ?: number | undefined
-  natural ?: number | undefined
-  rare ?: number | undefined
-  rex ?: number | undefined
-  suppress_tail ?: number | undefined
-  short_legs ?: number | undefined
-  hypoallergenic ?: number | undefined
-  adaptability ?: number | undefined
-  affection_level ?: number | undefined
-  country_code?: string | undefined
-  child_friendly ?: number | undefined
-  dog_friendly ?: number | undefined
-  energy_level ?: number | undefined
-  grooming ?: number | undefined
-  health_issues ?: number | undefined
-  intelligence ?: number | undefined
-  shedding_level ?: number | undefined
-  social_needs ?: number | undefined
-  stranger_friendly ?: number | undefined
-  vocalisation ?: number | undefined
-}*/
-
 
 export interface Breed {
   "weight"?:

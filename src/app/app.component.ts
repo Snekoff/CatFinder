@@ -1,16 +1,17 @@
 import {Component} from '@angular/core';
 import {Store} from '@ngrx/store';
 
-import {selectBreeds} from './state/breeds.selectors';
-import {retrievedBreedList} from './state/breed.actions';
+import {selectBreeds} from './state/selectors/breeds.selectors';
+import {retrievedBreedList} from './state/actions/breed.actions';
 import {BreedsService} from './breed-list/breeds.service';
+
 import {Observable} from "rxjs";
 import {FormArray, FormBuilder, Validators} from "@angular/forms";
-import {submitForm} from "./state/form.actions";
-import {map} from "rxjs/operators";
+
+import {submitForm} from "./state/actions/form.actions";
 import {Breed} from './breed-list/breed.model';
-import {selectForm} from "./state/form.selector";
-import {retrievedUrlList} from "./state/images.actions";
+import {selectForm} from "./state/selectors/form.selector";
+import {retrievedUrlList} from "./state/actions/images.actions";
 import {CatImageService} from "./cat-images/cat-image.service";
 
 @Component({
@@ -25,7 +26,6 @@ export class AppComponent {
   form$ = this.store.select(selectForm);
   form!: Observable<any>
 
-  //TODO: add validators https://angular.io/guide/form-validation
   filters = this.fb.group({
     breedsControl: this.fb.array([
       this.fb.control("All Breeds")
@@ -39,33 +39,23 @@ export class AppComponent {
     private fb: FormBuilder,
     private imageService: CatImageService
   ) {
-
   }
 
   ngOnInit() {
     this.breedService
       .getBreeds()
       .subscribe((breeds) => this.store.dispatch(retrievedBreedList({breeds})))
-
   }
-
 
   get breeds() {
     return this.filters.get("breedsControl") as FormArray;
   }
 
-
   onSubmit() {
     this.store.dispatch(submitForm({form: this.filters}));
     this.imageService
       .getImagesUrl()
-      .subscribe((imageUrls) => this.store.dispatch(retrievedUrlList( {imageUrls} )));
-    // TODO: Use EventEmitter with form value
-
-    /*this.form$.subscribe((form) => {
-      console.log("form1", form);
-      this.store.dispatch(submitForm({form}))
-    });*/
+      .subscribe((imageUrls) => this.store.dispatch(retrievedUrlList({imageUrls})));
   }
 
   onBreedsLoad(item: { breeds: Array<Breed> }): Array<Breed> {
@@ -73,17 +63,7 @@ export class AppComponent {
   }
 
   onChangeMatFetchBreeds(breedsArr: Array<string>) {
-    this.filters.patchValue({breedsControl: breedsArr, amountOfPictures: this.filters.value.amountOfPictures});
+    let breedsControlArr = <FormArray>this.filters.controls["breedsControl"];
+    breedsControlArr.controls[0].patchValue(breedsArr);
   }
 }
-
-
-//https://rxjs.dev/guide/overview
-//https://ngrx.io/guide/store
-//https://angular.io/guide/reactive-forms#validating-form-input
-
-
-//https://ngrx.io/guide/store/walkthrough
-
-
-//TODO: https://material.angular.io/components/sidenav/overview
