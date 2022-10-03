@@ -5,5 +5,5 @@ export const initialState: string[] = []
 
 export const imagesReducer = createReducer(
   initialState,
-  on(retrievedUrlList, (state,  {imageUrls}) => imageUrls || [])
+  on(retrievedUrlList, (_,  {imageUrls}) => imageUrls)
 );

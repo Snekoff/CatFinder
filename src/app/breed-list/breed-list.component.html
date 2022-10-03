@@ -1,8 +1,33 @@
 <ng-container *ngIf="model$ | async as model">
-  <mat-form-field appearance="fill">
-    <mat-label>Breeds</mat-label>
-    <mat-select (selectionChange)="choose.emit($event.value)" multiple>
-      <mat-option *ngFor="let breed of model" [value]="breed">{{breed}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <form [formGroup]="breedsForm"
+    (ngSubmit)="breedsFilterChanges.emit({
+      breedIds: breedsForm.get('breeds').value,
+      count: breedsForm.get('amountOfPictures').value
+    })">
+    <mat-form-field appearance="fill">
+      <mat-label>Breeds</mat-label>
+      <mat-select
+        formControlName="breeds"
+        multiple>
+        <mat-option
+          *ngFor="let breed of model"
+          [value]="breed.id"
+      >{{ breed.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field
+      appearance="fill">
+      <mat-label>Amount to show</mat-label>
+      <input matInput
+        type="number"
+        min="1"
+        formControlName="amountOfPictures"
+        placeholder="amountOfPictures">
+    </mat-form-field>
+    <button type="submit"
+      color="primary"
+      mat-raised-button
+      [disabled]="!breedsForm.valid"
+    >Find some kitties</button>
+  </form>
 </ng-container>

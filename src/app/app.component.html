@@ -1,25 +1,12 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav mode="side" opened>
-    <form [formGroup]="filters" (ngSubmit)="onSubmit()">
-
-      <div>
-        <h2>Filters</h2>
-        <app-breed-list class="book-list" [breeds$]="breeds$" (choose)="onChangeMatFetchBreeds($event)"
-                        formArrayName="breedsControl"></app-breed-list>
-      </div>
-
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Amount to show</mat-label>
-        <input matInput placeholder="amountOfPictures" formControlName="amountOfPictures" value=10 required>
-      </mat-form-field>
-
-      <div>
-        <button mat-raised-button color="primary" #findKittensButton [disabled]="!filters.valid" (click)="onFindSomeKittensButtonClick()">Find some kitties</button>
-      </div>
-
-    </form>
+    <h2>Filters</h2>
+    <app-breed-list class="book-list"
+      [breeds$]="breeds$"
+      (breedsFilterChanges)="breedsFilterChanges($event)"
+    ></app-breed-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-cat-images></app-cat-images>
+    <app-cat-images [imageUrlObjs$]="imageUrlObjs$"></app-cat-images>
   </mat-sidenav-content>
 </mat-sidenav-container>

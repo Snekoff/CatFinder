@@ -1,9 +1,9 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import {of, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {Breed} from './breed.model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Breed } from './breed-list.types';
 
 @Injectable({providedIn: 'root'})
 export class BreedsService {
@@ -18,7 +18,7 @@ export class BreedsService {
     }
     return this.http
       .get<Array<Breed>>(
-      "http://localhost:4200/",//'https://api.thecatapi.com/v1/breeds',
+        'https://api.thecatapi.com/v1/breeds',
         options
       )
       .pipe(map((breeds) => breeds || []));

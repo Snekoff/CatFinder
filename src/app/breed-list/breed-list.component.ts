@@ -3,15 +3,18 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges, OnInit,
+  OnInit,
   Output
 } from '@angular/core';
-import {Breed} from './breed.model';
-import {MatSelectChange} from "@angular/material/select";
-import {Observable, startWith} from "rxjs";
-import {map} from "rxjs/operators";
+import { Breed, BreedList } from './breed-list.types';
+import { Observable, startWith } from "rxjs";
+import { map } from "rxjs/operators";
+import { FormBuilder, Validators } from "@angular/forms";
 
-const ALL_BREADS = "All breeds";
+export const ALL_BREADS: BreedList = {
+  id: 'all_breads',
+  name: 'All breads'
+};
 
 @Component({
   selector: 'app-breed-list',
@@ -22,18 +25,25 @@ const ALL_BREADS = "All breeds";
 export class BreedListComponent implements OnInit {
   @Input() breeds$!: Observable<Breed[]>;
 
-  @Output() choose = new EventEmitter<string[]>();
+  @Output() breedsFilterChanges = new EventEmitter<{
+    breedIds: string[],
+    count: number
+  }>();
 
-  model$!: Observable<string[]>;
+  breedsForm: any = this.fb.group({
+    breeds: [[ALL_BREADS], Validators.required],
+    amountOfPictures: [10, Validators.required]
+  })
 
-  constructor() {
-  }
+  model$!: Observable<BreedList[]>;
+
+  constructor(
+    private readonly fb: FormBuilder,
+  ) { }
 
   ngOnInit() {
     this.model$ = this.breeds$.pipe(
-      map((breeds) => {
-        return [ALL_BREADS, ...breeds.map((item) => item.name)];
-      }),
+      map((breeds) => [ALL_BREADS, ...breeds.map((item) => ({ name: item.name, id: item.id }))]),
       startWith([])
     );
   }

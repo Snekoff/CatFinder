@@ -1,30 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {Store} from "@ngrx/store";
-import {CatImageService} from "./cat-image.service";
-import {selectImages} from "../state/selectors/images.selector";
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Observable, startWith } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-cat-images',
   templateUrl: './cat-images.component.html',
-  styleUrls: ['./cat-images.component.scss']
+  styleUrls: ['./cat-images.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CatImagesComponent implements OnInit {
+  @Input() imageUrlObjs$!: Observable<any>;
 
-  imageUrlObjs$ = this.store.select(selectImages);
-  imageUrls: Array<string> = [];
-
-  constructor(
-    private imageService: CatImageService,
-    private store: Store
-  ) {
-  }
+  model$!: Observable<string[]>;
 
   ngOnInit(): void {
-    this.imageUrlObjs$.subscribe((objects) => this.reformatArrayOfObjectsToArrayOsUrls(objects))
+    this.model$ = this.imageUrlObjs$.pipe(
+      map((items: any) => items.map((item: any) => item.url)),
+      startWith([])
+    );
   }
-
-  reformatArrayOfObjectsToArrayOsUrls(imageObjects: Array<any>) {
-    imageObjects.map((imageObj) => this.imageUrls.push(imageObj.url));
-  }
-
 }

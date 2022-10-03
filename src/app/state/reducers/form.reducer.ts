@@ -5,5 +5,5 @@ export const initialState = {};
 
 export const formReducer = createReducer(
   initialState,
-  on(submitForm, (state,  {form}) => form)
+  on(submitForm, (state,  {form}) => ({ ...state, ...form }))
 );
