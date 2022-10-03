@@ -6,7 +6,7 @@ import {selectImages} from "../state/selectors/images.selector";
 @Component({
   selector: 'app-cat-images',
   templateUrl: './cat-images.component.html',
-  styleUrls: ['./cat-images.component.css']
+  styleUrls: ['./cat-images.component.scss']
 })
 export class CatImagesComponent implements OnInit {
 

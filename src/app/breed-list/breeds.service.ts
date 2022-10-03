@@ -18,7 +18,7 @@ export class BreedsService {
     }
     return this.http
       .get<Array<Breed>>(
-        'https://api.thecatapi.com/v1/breeds',
+      "http://localhost:4200/",//'https://api.thecatapi.com/v1/breeds',
         options
       )
       .pipe(map((breeds) => breeds || []));

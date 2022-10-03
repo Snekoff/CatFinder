@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Store} from '@ngrx/store';
 
 import {selectBreeds} from './state/selectors/breeds.selectors';
@@ -17,14 +17,15 @@ import {CatImageService} from "./cat-images/cat-image.service";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'cat-finder';
 
   breeds$ = this.store.select(selectBreeds);
   form$ = this.store.select(selectForm);
   form!: Observable<any>
+  @ViewChild('findKittensButton') findKittensButton: any;
 
   filters = this.fb.group({
     breedsControl: this.fb.array([
@@ -65,5 +66,16 @@ export class AppComponent {
   onChangeMatFetchBreeds(breedsArr: Array<string>) {
     let breedsControlArr = <FormArray>this.filters.controls["breedsControl"];
     breedsControlArr.controls[0].patchValue(breedsArr);
+  }
+
+  onFindSomeKittensButtonClick() {
+    this.findKittensButton._elementRef.nativeElement.textContent = "Wait for it";
+    this.findKittensButton._elementRef.nativeElement.disabled = true;
+    setTimeout(
+      () => {
+        this.findKittensButton._elementRef.nativeElement.textContent = "Find some more kitties";
+        this.findKittensButton._elementRef.nativeElement.disabled = false;
+      },
+      2000)
   }
 }

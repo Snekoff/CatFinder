@@ -51,7 +51,7 @@ export class CatImageService {
 
   getImagesUrl(): Observable<Array<string>> {
 
-    let url = "https://api.thecatapi.com/v1/images/search?limit=" + this.limit;
+    let url = "http://localhost:4200/"//"https://api.thecatapi.com/v1/images/search?limit=" + this.limit;
     if (this.breedListString.indexOf("All Breeds") === -1 && this.breedListString.indexOf("undefined") === -1 && this.breedListString.length > 0) {
       url = url.concat("&", this.breedListString);
     }

@@ -4,10 +4,8 @@
 
       <div>
         <h2>Filters</h2>
-        <ng-container *ngIf="breeds$ | async as breeds">
-          <app-breed-list class="book-list" [breeds]="breeds" (choose)="onChangeMatFetchBreeds($event)"
-                          formArrayName="breedsControl"></app-breed-list>
-        </ng-container>
+        <app-breed-list class="book-list" [breeds$]="breeds$" (choose)="onChangeMatFetchBreeds($event)"
+                        formArrayName="breedsControl"></app-breed-list>
       </div>
 
       <mat-form-field class="example-full-width" appearance="fill">
@@ -16,7 +14,7 @@
       </mat-form-field>
 
       <div>
-        <button mat-raised-button color="primary" [disabled]="!filters.valid">Find some kitties</button>
+        <button mat-raised-button color="primary" #findKittensButton [disabled]="!filters.valid" (click)="onFindSomeKittensButtonClick()">Find some kitties</button>
       </div>
 
     </form>

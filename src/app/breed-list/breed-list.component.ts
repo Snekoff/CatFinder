@@ -3,39 +3,38 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges, OnInit,
   Output
 } from '@angular/core';
 import {Breed} from './breed.model';
-import {FormControl} from '@angular/forms';
+import {MatSelectChange} from "@angular/material/select";
+import {Observable, startWith} from "rxjs";
+import {map} from "rxjs/operators";
+
+const ALL_BREADS = "All breeds";
 
 @Component({
   selector: 'app-breed-list',
   templateUrl: './breed-list.component.html',
-  styleUrls: ['./breed-list.component.css'],
+  styleUrls: ['./breed-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BreedListComponent {
+export class BreedListComponent implements OnInit {
+  @Input() breeds$!: Observable<Breed[]>;
 
-  @Input() breeds: Array<Breed> = [];
-  @Output() choose = new EventEmitter<Array<string>>();
-  breedsC = new FormControl(['All breeds']);
-  breedsStringArr: Array<string> = [];
+  @Output() choose = new EventEmitter<string[]>();
+
+  model$!: Observable<string[]>;
 
   constructor() {
   }
 
-  onChangeMat(value: Array<string> | null) {
-    if (value) this.choose.emit(value);
+  ngOnInit() {
+    this.model$ = this.breeds$.pipe(
+      map((breeds) => {
+        return [ALL_BREADS, ...breeds.map((item) => item.name)];
+      }),
+      startWith([])
+    );
   }
-
-  reformatBreeds() {
-    this.breedsStringArr = [];
-    this.breedsStringArr.push("All breeds");
-    this.breeds.map((breed) => this.breedsStringArr.push(breed.name));
-  }
-
-  ngOnChanges() {
-    this.reformatBreeds()
-  }
-
 }
