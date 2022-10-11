@@ -1,4 +1,10 @@
 # CatFinder
+Simple Angular app (built using Angular, RxJS, NgRX) App
+gets breeds of cats from open API and provide user with interface to
+select which one breed he want to see images. Then images show up.
+
+![image](https://user-images.githubusercontent.com/32234747/195060655-f75287d7-f5ae-4b37-a3a5-ceb8b3ef6dca.png)
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.2.
 
